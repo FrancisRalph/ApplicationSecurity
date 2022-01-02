@@ -52,7 +52,8 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Your password must be at least {2} characters long.", MinimumLength = 12)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^0-9a-zA-Z ]).{12,}$", ErrorMessage = "Your password must have at least 12 characters with at least 1 special character, number, lowercase and uppercase letter")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
