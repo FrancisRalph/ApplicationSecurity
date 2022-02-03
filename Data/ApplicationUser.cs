@@ -10,9 +10,8 @@ namespace ApplicationSecurity.Data
         
         public string LastName { get; set; }
         
+        // [CreditCard] // don't use validator here as this will be encrypted value
         public string CreditCardNumber { get; set; }
-        
-        public string CreditCardSecurityCode { get; set; } // CVV or CVC
         
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
