@@ -1,6 +1,7 @@
 ﻿const passwordInput = $("[name='Input.Password']");
 const strengthText = $("#passwordStrength");
 
+// matches backend validation
 function getPasswordScore() {
     const password = passwordInput.val();
     let score = 0;
