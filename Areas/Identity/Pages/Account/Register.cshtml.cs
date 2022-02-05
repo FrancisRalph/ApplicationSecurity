@@ -50,6 +50,11 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+            
+            [Required]
+            [CreditCard]
+            [Display(Name = "Credit Card Number")]
+            public string CreditCardNumber { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "Your password must be at least {2} characters long.", MinimumLength = 12)]
