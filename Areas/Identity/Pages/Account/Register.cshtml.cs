@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ApplicationSecurity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -53,16 +54,25 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+
+            [Required]
+            [CreditCard]
+            [Display(Name = "Credit Card Number")]
+            public string CreditCardNumber { get; set; }
+            
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Date of Birth")]
+            public DateTime DateOfBirth { get; set; }
+            
+            [Required]
+            [Display(Name = "Photo")]
+            public IFormFile Photo { get; set; }
             
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-            
-            [Required]
-            [CreditCard]
-            [Display(Name = "Credit Card Number")]
-            public string CreditCardNumber { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "Your password must be at least {2} characters long.", MinimumLength = 12)]
@@ -71,6 +81,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
