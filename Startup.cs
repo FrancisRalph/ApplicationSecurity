@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationSecurity.Services;
 
 namespace ApplicationSecurity
 {
@@ -31,6 +32,7 @@ namespace ApplicationSecurity
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -42,8 +44,11 @@ namespace ApplicationSecurity
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
+            
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+
+            services.AddScoped<EncryptionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,41 +15,37 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly EncryptionService _encryptionService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            EncryptionService encryptionService
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _encryptionService = encryptionService;
         }
 
         public string Username { get; set; }
+        
+        [Display(Name = "Credit Card Number")]
+        public string TruncatedCreditCardNumber { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
-
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
+            var encryptedCreditCardNumber = user.CreditCardNumber;
+            var decryptedCreditCardNumber = _encryptionService.Decrypt(encryptedCreditCardNumber);
+            var truncatedCreditCardNumber = decryptedCreditCardNumber[^4..]; // last 4 characters
 
             Username = userName;
-
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
-            };
+            TruncatedCreditCardNumber = string.Concat(Enumerable.Repeat("*", 12)) + truncatedCreditCardNumber;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -75,17 +72,6 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
-            }
-
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
             }
 
             await _signInManager.RefreshSignInAsync(user);
