@@ -44,6 +44,8 @@ namespace ApplicationSecurity
             }).AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+            
+            KeyRing
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
