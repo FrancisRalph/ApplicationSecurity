@@ -44,7 +44,10 @@ namespace ApplicationSecurity
                 options.Password.RequireUppercase = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;
-                
+
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                // options.Lockout.DefaultLockoutTimeSpan -> default is 5 mins
+
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(options =>
