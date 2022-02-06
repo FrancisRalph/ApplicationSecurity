@@ -13,5 +13,7 @@ namespace ApplicationSecurity.Data
             : base(options)
         {
         }
+        
+        public DbSet<AuditLog> AuditLogs { get; set; }
     }
 }
