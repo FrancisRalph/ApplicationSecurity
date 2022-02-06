@@ -44,8 +44,9 @@ namespace ApplicationSecurity
                 options.Password.RequireUppercase = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;
+                
             }).AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
@@ -56,6 +57,15 @@ namespace ApplicationSecurity
                 // redirects to this page after session time out:
                 options.LoginPath = "/Identity/Account/Login";
                 options.SlidingExpiration = true; // time out only when idling
+            });
+            
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                // ensure cookie is validated fast enough:
+                //  cookie is invalidated after log out to prevent session hijacking
+                //  but ValidationInterval is 30 mins which might be too slow
+                //  the below code reduces it to 10 seconds
+                options.ValidationInterval = TimeSpan.FromSeconds(10);
             });
             
             services.AddRazorPages()
