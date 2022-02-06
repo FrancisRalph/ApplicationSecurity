@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ApplicationSecurity
 {
@@ -44,6 +45,16 @@ namespace ApplicationSecurity
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.Cookie.Name = "SITConnect";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                options.LoginPath = "/Identity/Account/Login";
+                options.SlidingExpiration = true;
+            });
             
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
