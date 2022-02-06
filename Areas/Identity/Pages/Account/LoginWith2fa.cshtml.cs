@@ -84,20 +84,20 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
-                await _auditLogService.AddAuditLogAsync(user, LogAction.SuccessfulLogin);
+                await _auditLogService.AddAuditLogAsync(Request, user, LogAction.SuccessfulLogin);
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
             {
                 _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
-                await _auditLogService.AddAuditLogAsync(user, LogAction.RedirectedToLockedOut);
+                await _auditLogService.AddAuditLogAsync(Request, user, LogAction.RedirectedToLockedOut);
                 return RedirectToPage("./Lockout");
             }
             else
             {
                 _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
                 ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
-                await _auditLogService.AddAuditLogAsync(user, LogAction.Wrong2Fa);
+                await _auditLogService.AddAuditLogAsync(Request, user, LogAction.Wrong2Fa);
                 return Page();
             }
         }

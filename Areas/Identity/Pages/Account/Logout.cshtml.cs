@@ -42,7 +42,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             await _userManager.UpdateSecurityStampAsync(user);
             
             _logger.LogInformation("User logged out.");
-            await _auditLogService.AddAuditLogAsync(user, LogAction.Logout);
+            await _auditLogService.AddAuditLogAsync(Request, user, LogAction.Logout);
             
             if (returnUrl != null)
             {

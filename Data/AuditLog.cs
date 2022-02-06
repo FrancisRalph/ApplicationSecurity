@@ -3,7 +3,7 @@
 namespace ApplicationSecurity.Data
 {
     public enum LogAction
-    {
+    { // starts at index 0
         SuccessfulLogin,
         WrongPassword,
         Wrong2Fa,
@@ -18,5 +18,6 @@ namespace ApplicationSecurity.Data
         public ApplicationUser User { get; set; }
         public LogAction Action { get; set; }
         public DateTime Timestamp { get; set; }
+        public string? IpAddress { get; set; }
     }
 }

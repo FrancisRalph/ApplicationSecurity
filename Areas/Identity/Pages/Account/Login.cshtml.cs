@@ -91,24 +91,24 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    await _auditLogService.AddAuditLogAsync(user, LogAction.SuccessfulLogin);
+                    await _auditLogService.AddAuditLogAsync(Request, user, LogAction.SuccessfulLogin);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    await _auditLogService.AddAuditLogAsync(user, LogAction.RedirectedTo2Fa);
+                    await _auditLogService.AddAuditLogAsync(Request, user, LogAction.RedirectedTo2Fa);
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
-                    await _auditLogService.AddAuditLogAsync(user, LogAction.RedirectedToLockedOut);
+                    await _auditLogService.AddAuditLogAsync(Request, user, LogAction.RedirectedToLockedOut);
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    await _auditLogService.AddAuditLogAsync(user, LogAction.WrongPassword);
+                    await _auditLogService.AddAuditLogAsync(Request, user, LogAction.WrongPassword);
                     return Page();
                 }
             }
