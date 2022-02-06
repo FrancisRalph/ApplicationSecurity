@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,14 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly AuditLogService _auditLogService;
 
-        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger, UserManager<ApplicationUser> userManager)
+        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger, UserManager<ApplicationUser> userManager, AuditLogService auditLogService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _auditLogService = auditLogService;
         }
 
         public void OnGet()
@@ -31,12 +34,16 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            var user = await _userManager.GetUserAsync(User);
+            
             await _signInManager.SignOutAsync();
             
             // invalidate cookie on logout
-            await _userManager.UpdateSecurityStampAsync(await _userManager.GetUserAsync(User));
+            await _userManager.UpdateSecurityStampAsync(user);
             
             _logger.LogInformation("User logged out.");
+            await _auditLogService.AddAuditLogAsync(user, LogAction.Logout);
+            
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

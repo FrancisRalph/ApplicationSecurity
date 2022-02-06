@@ -7,7 +7,8 @@ namespace ApplicationSecurity.Data
         SuccessfulLogin,
         WrongPassword,
         Wrong2Fa,
-        LogInAttemptButLockedOut,
+        RedirectedToLockedOut,
+        RedirectedTo2Fa,
         Logout
     }
     

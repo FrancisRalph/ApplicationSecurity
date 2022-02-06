@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginWith2faModel> _logger;
+        private readonly AuditLogService _auditLogService;
 
-        public LoginWith2faModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginWith2faModel> logger)
+        public LoginWith2faModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginWith2faModel> logger, AuditLogService auditLogService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _auditLogService = auditLogService;
         }
 
         [BindProperty]
@@ -81,17 +84,20 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                await _auditLogService.AddAuditLogAsync(user, LogAction.SuccessfulLogin);
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
             {
                 _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+                await _auditLogService.AddAuditLogAsync(user, LogAction.RedirectedToLockedOut);
                 return RedirectToPage("./Lockout");
             }
             else
             {
                 _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
                 ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                await _auditLogService.AddAuditLogAsync(user, LogAction.Wrong2Fa);
                 return Page();
             }
         }
