@@ -27,7 +27,7 @@ namespace ApplicationSecurity.Services
                 return result;
             }
 
-            var hasUserPasswordExceededMinimumAge = await _passwordLogService.HasUserPasswordExceededMinimumAgeAsync(
+            var hasUserPasswordExceededMinimumAge = _passwordLogService.HasUserPasswordExceededMinimumAge(
                 user,
                 TimeSpan.FromMinutes(MinimumAgeInMinutes)
             );

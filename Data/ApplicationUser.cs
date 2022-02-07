@@ -18,5 +18,6 @@ namespace ApplicationSecurity.Data
         
         public string PhotoPath { get; set; }
         
+        public DateTime PasswordLastChanged { get; set; }
     }
 }

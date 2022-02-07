@@ -26,19 +26,16 @@ namespace ApplicationSecurity.Services
                 PasswordHash = user.PasswordHash,
                 CreatedAt = DateTime.Now,
             });
+
+            var userToUpdate = await _context.Users.FindAsync(user.Id);
+            userToUpdate.PasswordLastChanged = DateTime.Now;
+                
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> HasUserPasswordExceededMinimumAgeAsync(ApplicationUser user, TimeSpan minimumAge)
+        public bool HasUserPasswordExceededMinimumAge(ApplicationUser user, TimeSpan minimumAge)
         {
-            var lastChanged = await _context.PasswordLogs
-                .Where(p => p.User.Id == user.Id)
-                .OrderByDescending(p => p.CreatedAt)
-                .Select(p => (DateTime?) p.CreatedAt)
-                .FirstOrDefaultAsync();
-
-            var timeSpanSinceLastChanged = DateTime.Now - (lastChanged ?? DateTime.MinValue);
-            
+            var timeSpanSinceLastChanged = DateTime.Now - user.PasswordLastChanged;
             return timeSpanSinceLastChanged > minimumAge;
         }
 
