@@ -24,7 +24,7 @@ namespace ApplicationSecurity.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public void SetErrorMessage()
         {
             switch (StatusCode)
             {
@@ -39,6 +39,16 @@ namespace ApplicationSecurity.Pages
                     ErrorMessage = "We could not find what you were looking for.";
                     break;
             }
+        }
+
+        public void OnGet()
+        {
+            SetErrorMessage();
+        }
+
+        public void OnPost()
+        {
+            SetErrorMessage();
         }
     }
 }
