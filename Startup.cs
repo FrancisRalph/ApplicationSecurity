@@ -47,7 +47,7 @@ namespace ApplicationSecurity
                 options.Password.RequireDigit = true;
 
                 options.Lockout.MaxFailedAccessAttempts = 3;
-                // options.Lockout.DefaultLockoutTimeSpan -> default is 5 mins
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
