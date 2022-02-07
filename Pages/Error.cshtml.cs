@@ -29,11 +29,14 @@ namespace ApplicationSecurity.Pages
             switch (StatusCode)
             {
                 case 403:
-                    ErrorMessage = "Forbidden";
+                    ErrorMessage = "You are not authorized to access this page.";
+                    break;
+                case 500:
+                    ErrorMessage = "Something went wrong when processing your request.";
                     break;
                 default:
                     StatusCode = 404;
-                    ErrorMessage = "Not found";
+                    ErrorMessage = "We could not find what you were looking for.";
                     break;
             }
         }

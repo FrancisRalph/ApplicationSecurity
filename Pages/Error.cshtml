@@ -4,8 +4,11 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error @Model.StatusCode</h1>
-<h2 class="text-danger">@Model.ErrorMessage</h2>
-
+<div class="text-center">
+    <h1>Oops!</h1>
+    <p class="h2 font-weight-normal">@Model.ErrorMessage</p>
+    <p>(Error Code: @Model.StatusCode)</p>
+    <a asp-page="/Index">Return to home</a>
+</div>
 
 

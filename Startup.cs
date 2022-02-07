@@ -84,7 +84,7 @@ namespace ApplicationSecurity
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseExceptionHandler("/Error"); // handles unhandled exceptions
+            app.UseExceptionHandler("/Error/500"); // handles unhandled exceptions
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             
             if (env.IsDevelopment())
