@@ -29,19 +29,22 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly EncryptionService _encryptionService;
+        private readonly PasswordLogService _passwordLogService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            EncryptionService encryptionService)
+            EncryptionService encryptionService,
+            PasswordLogService passwordLogService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _encryptionService = encryptionService;
+            _passwordLogService = passwordLogService;
         }
 
         [BindProperty]
@@ -119,6 +122,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    await _passwordLogService.LogPasswordAsync(user);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

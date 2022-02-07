@@ -51,7 +51,8 @@ namespace ApplicationSecurity
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddPasswordValidator<PasswordWithHistoryValidator>();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -81,6 +82,7 @@ namespace ApplicationSecurity
 
             services.AddScoped<EncryptionService>();
             services.AddScoped<AuditLogService>();
+            services.AddScoped<PasswordLogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

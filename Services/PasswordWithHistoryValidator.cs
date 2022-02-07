@@ -1,0 +1,43 @@
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ApplicationSecurity.Data;
+using Microsoft.AspNetCore.Identity;
+
+namespace ApplicationSecurity.Services
+{
+    public class PasswordWithHistoryValidator : PasswordValidator<ApplicationUser>
+    {
+        private const int HistoryCount = 2;
+        private readonly PasswordLogService _passwordLogService;
+
+        public PasswordWithHistoryValidator(PasswordLogService passwordLogService, IdentityErrorDescriber errors = null)
+            : base(errors)
+        {
+            _passwordLogService = passwordLogService;
+        }
+
+        public override async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager,
+            ApplicationUser user, string password)
+        {
+            var result = await base.ValidateAsync(manager, user, password);
+            if (!result.Succeeded)
+            {
+                return result;
+            }
+
+            var isPasswordAlreadyUsed =
+                await _passwordLogService.IsPasswordAlreadyUsedAsync(user, password, HistoryCount);
+
+            if (isPasswordAlreadyUsed)
+            {
+                return IdentityResult.Failed( new IdentityError
+                {
+                    Code = "PasswordAlreadyUsed",
+                    Description = "Password already used before"
+                });
+            }
+            
+            return IdentityResult.Success;
+        }
+    }
+}

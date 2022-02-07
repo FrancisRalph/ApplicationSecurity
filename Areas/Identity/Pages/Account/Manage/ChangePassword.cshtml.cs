@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,15 +16,18 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly PasswordLogService _passwordLogService;
 
         public ChangePasswordModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<ChangePasswordModel> logger)
+            ILogger<ChangePasswordModel> logger,
+            PasswordLogService passwordLogService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _passwordLogService = passwordLogService;
         }
 
         [BindProperty]
@@ -91,6 +95,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            await _passwordLogService.LogPasswordAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
