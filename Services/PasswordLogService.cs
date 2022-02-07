@@ -29,6 +29,19 @@ namespace ApplicationSecurity.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> HasUserPasswordExceededMinimumAgeAsync(ApplicationUser user, TimeSpan minimumAge)
+        {
+            var lastChanged = await _context.PasswordLogs
+                .Where(p => p.User.Id == user.Id)
+                .OrderByDescending(p => p.CreatedAt)
+                .Select(p => (DateTime?) p.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            var timeSpanSinceLastChanged = DateTime.Now - (lastChanged ?? DateTime.MinValue);
+            
+            return timeSpanSinceLastChanged > minimumAge;
+        }
+
         public async Task<bool> IsPasswordAlreadyUsedAsync(ApplicationUser user, string passwordPlaintext,
             int historyCount)
         {
