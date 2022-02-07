@@ -26,18 +26,14 @@ namespace ApplicationSecurity.Pages
 
         public void OnGet()
         {
-            if (StatusCode == 0)
-            {
-                StatusCode = 404;
-            }
-            
             switch (StatusCode)
             {
-                case 404:
-                    ErrorMessage = "Not found";
-                    break;
                 case 403:
                     ErrorMessage = "Forbidden";
+                    break;
+                default:
+                    StatusCode = 404;
+                    ErrorMessage = "Not found";
                     break;
             }
         }

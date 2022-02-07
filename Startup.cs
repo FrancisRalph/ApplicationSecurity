@@ -53,7 +53,7 @@ namespace ApplicationSecurity
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.AccessDeniedPath = "/Error/403";
                 options.Cookie.Name = "SITConnect";
                 options.Cookie.HttpOnly = true;
                 
