@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Services;
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ApplicationSecurity
@@ -73,6 +74,8 @@ namespace ApplicationSecurity
             
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+            
+            services.AddReCaptcha(Configuration.GetSection("ReCaptcha"));
 
             services.AddScoped<EncryptionService>();
             services.AddScoped<AuditLogService>();
