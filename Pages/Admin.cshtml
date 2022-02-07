@@ -5,4 +5,28 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Admin page</p>
+<br/>
+
+<h3 class="font-weight-normal mb-4">Error Triggers</h3>
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item">
+        <form asp-page-handler="Error400" method="post">
+            <button class="btn btn-primary" type="submit">Error 400</button>
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form asp-page-handler="Error403" method="post">
+            <button class="btn btn-primary" type="submit">Error 403</button>
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form asp-page-handler="Error404" method="post">
+            <button class="btn btn-primary" type="submit">Error 404</button>
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form asp-page-handler="Error500" method="post">
+            <button class="btn btn-primary" type="submit">Error 500</button>
+        </form>
+    </li>
+</ul>

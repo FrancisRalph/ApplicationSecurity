@@ -28,7 +28,7 @@ namespace ApplicationSecurity.Pages
             return user?.NormalizedUserName == "ADMIN@GMAIL.COM";
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (!await IsUserAdminAsync())
             {
@@ -38,14 +38,44 @@ namespace ApplicationSecurity.Pages
             return Page();
         }
         
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostError404Async()
         {
             if (!await IsUserAdminAsync())
             {
                 return Forbid();
             }
 
-            return Page();
+            return NotFound();
+        }
+        
+        public async Task<IActionResult> OnPostError403Async()
+        {
+            if (!await IsUserAdminAsync())
+            {
+                return Forbid();
+            }
+
+            return Forbid();
+        }
+        
+        public async Task<IActionResult> OnPostError500Async()
+        {
+            if (!await IsUserAdminAsync())
+            {
+                return Forbid();
+            }
+
+            throw new Exception("Intentionally triggered error");
+        }
+        
+        public async Task<IActionResult> OnPostError400Async()
+        {
+            if (!await IsUserAdminAsync())
+            {
+                return Forbid();
+            }
+
+            return BadRequest();
         }
     }
 }
