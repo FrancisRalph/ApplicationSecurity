@@ -15,5 +15,6 @@ namespace ApplicationSecurity.Data
         }
         
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<PasswordLog> PasswordLogs { get; set; }
     }
 }
