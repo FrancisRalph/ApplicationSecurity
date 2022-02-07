@@ -25,7 +25,7 @@ namespace ApplicationSecurity.Pages
         private async Task<bool> IsUserAdminAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            return user?.Id == Guid.Parse("F3148AF2-F58C-4895-A304-08D9EA58BD13");
+            return user?.NormalizedUserName == "ADMIN@GMAIL.COM";
         }
 
         public async Task<IActionResult> OnGet()
