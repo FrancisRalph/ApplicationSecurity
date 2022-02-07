@@ -37,6 +37,7 @@ namespace ApplicationSecurity
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddScoped<IPasswordValidator<ApplicationUser>, PasswordWithHistoryValidator>();
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -51,8 +52,7 @@ namespace ApplicationSecurity
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 
-            }).AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddPasswordValidator<PasswordWithHistoryValidator>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(options =>
             {
