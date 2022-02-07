@@ -24,7 +24,7 @@ namespace ApplicationSecurity.Pages
             _logger = logger;
         }
 
-        public void SetErrorMessage()
+        private void SetErrorMessage()
         {
             switch (StatusCode)
             {
