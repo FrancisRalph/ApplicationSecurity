@@ -24,18 +24,18 @@ namespace ApplicationSecurity.Services
             {
                 User = user,
                 PasswordHash = user.PasswordHash,
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
             });
 
             var userToUpdate = await _context.Users.FindAsync(user.Id);
-            userToUpdate.PasswordLastChanged = DateTime.Now;
+            userToUpdate.PasswordLastChanged = DateTime.UtcNow;
                 
             await _context.SaveChangesAsync();
         }
 
-        public bool HasUserPasswordExceededMinimumAge(ApplicationUser user, TimeSpan minimumAge)
+        public static bool HasUserPasswordExceededMinimumAge(ApplicationUser user, TimeSpan minimumAge)
         {
-            var timeSpanSinceLastChanged = DateTime.Now - user.PasswordLastChanged;
+            var timeSpanSinceLastChanged = DateTime.UtcNow - user.PasswordLastChanged;
             return timeSpanSinceLastChanged > minimumAge;
         }
 

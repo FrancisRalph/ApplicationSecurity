@@ -20,7 +20,7 @@ namespace ApplicationSecurity.Services
             {
                 User = user,
                 Action = action,
-                Timestamp = DateTime.Now,
+                Timestamp = DateTime.UtcNow,
                 IpAddress = request.HttpContext.Connection.RemoteIpAddress?.ToString()
             });
             
