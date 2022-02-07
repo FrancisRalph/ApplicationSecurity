@@ -13,10 +13,10 @@ namespace ApplicationSecurity.Pages
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
+        [BindProperty(SupportsGet = true)]
+        public int StatusCode { get; set; }
+        public string ErrorMessage { get; set; }
+        
         private readonly ILogger<ErrorModel> _logger;
 
         public ErrorModel(ILogger<ErrorModel> logger)
@@ -26,7 +26,20 @@ namespace ApplicationSecurity.Pages
 
         public void OnGet()
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            if (StatusCode == 0)
+            {
+                StatusCode = 404;
+            }
+            
+            switch (StatusCode)
+            {
+                case 404:
+                    ErrorMessage = "Not found";
+                    break;
+                case 403:
+                    ErrorMessage = "Forbidden";
+                    break;
+            }
         }
     }
 }
