@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
 using ApplicationSecurity.Services;
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace ApplicationSecurity.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [ValidateReCaptcha]
     public class LoginWith2faModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

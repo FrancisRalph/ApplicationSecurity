@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
 using ApplicationSecurity.Services;
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Logging;
 namespace ApplicationSecurity.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [ValidateReCaptcha]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

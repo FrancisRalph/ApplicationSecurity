@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace ApplicationSecurity.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [ValidateReCaptcha]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
