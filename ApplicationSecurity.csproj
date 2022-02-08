@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.ReCaptcha" Version="1.5.1" />
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.49.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.13" />
@@ -14,6 +15,56 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\nuget\bootstrap.nuspec" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\nuget\bootstrap.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\nuget\bootstrap.sass.nuspec" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\nuget\MyGet.ps1" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\browsers.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\helpers\fixture.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\integration\bundle-modularity.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\integration\bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\integration\index.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\integration\rollup.bundle-modularity.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\integration\rollup.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\karma.conf.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\README.md" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\.eslintrc.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\alert.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\base-component.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\button.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\carousel.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\collapse.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\dom\data.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\dom\event-handler.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\dom\manipulator.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\dom\selector-engine.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\dropdown.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\jquery.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\modal.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\offcanvas.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\popover.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\scrollspy.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\tab.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\toast.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\tooltip.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\util\backdrop.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\util\index.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\util\sanitizer.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\unit\util\scrollbar.spec.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\alert.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\button.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\carousel.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\collapse.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\dropdown.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\modal.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\popover.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\scrollspy.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\tab.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\toast.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\tests\visual\tooltip.html" />
   </ItemGroup>
 
 </Project>
