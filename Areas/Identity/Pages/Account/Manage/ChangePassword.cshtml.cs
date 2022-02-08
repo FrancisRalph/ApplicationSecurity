@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Middleware;
 using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
 {
+    [IgnorePasswordExpiry]
     public class ChangePasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -55,7 +57,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
             public string ConfirmPassword { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(bool expired)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -67,6 +69,11 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
             if (!hasPassword)
             {
                 return RedirectToPage("./SetPassword");
+            }
+
+            if (expired)
+            {
+                StatusMessage = "Error: Your password has expired. Please change your password";
             }
 
             return Page();

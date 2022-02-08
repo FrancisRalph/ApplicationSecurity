@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationSecurity.Data;
+using ApplicationSecurity.Middleware;
 using ApplicationSecurity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace ApplicationSecurity.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [IgnorePasswordExpiry]
     public class LogoutModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

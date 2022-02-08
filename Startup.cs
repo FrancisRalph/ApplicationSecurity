@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationSecurity.Middleware;
 using ApplicationSecurity.Services;
 using AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -108,6 +109,7 @@ namespace ApplicationSecurity
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UsePasswordExpiryMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
