@@ -16,7 +16,7 @@ namespace ApplicationSecurity.Data
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         
-        public string PhotoPath { get; set; }
+        public string Photo { get; set; }
         
         public DateTime PasswordLastChanged { get; set; }
     }

@@ -32,6 +32,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
         
         [Display(Name = "Credit Card Number")]
         public string TruncatedCreditCardNumber { get; set; }
+        public string Photo { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -46,6 +47,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
             TruncatedCreditCardNumber = string.Concat(Enumerable.Repeat("*", 12)) + truncatedCreditCardNumber;
+            Photo = user.Photo;
         }
 
         public async Task<IActionResult> OnGetAsync()

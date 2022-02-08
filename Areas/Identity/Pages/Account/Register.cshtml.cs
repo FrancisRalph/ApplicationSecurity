@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -74,7 +75,9 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             [Display(Name = "Date of Birth")]
             public DateTime DateOfBirth { get; set; }
             
-            // [Required]
+            [Required]
+            [MaxFileSize(30 * 1024)] // server side only
+            [AllowedExtensions(new [] { ".jpg", ".png" })] // server side only
             public IFormFile Photo { get; set; }
             
             [Required]
@@ -102,6 +105,19 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        private static async Task<byte[]> GetBytesFromFile(IFormFile formFile)
+        {
+            await using var memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
+        }
+
+        private static async Task<string> ConvertFileToBase64(IFormFile formFile)
+        {
+            var extension = Path.GetExtension(formFile.FileName);
+            return $"data:image/{extension};base64," + Convert.ToBase64String(await GetBytesFromFile(formFile));
+        }
+        
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -116,7 +132,8 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     DateOfBirth = Input.DateOfBirth,
-                    CreditCardNumber = _encryptionService.Encrypt(Input.CreditCardNumber)
+                    CreditCardNumber = _encryptionService.Encrypt(Input.CreditCardNumber),
+                    Photo = await ConvertFileToBase64(Input.Photo)
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -153,6 +170,65 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+    }
+    
+    public class MaxFileSizeAttribute : ValidationAttribute
+    {
+        private readonly int _maxFileSize;
+        public MaxFileSizeAttribute(int maxFileSize)
+        {
+            _maxFileSize = maxFileSize;
+        }
+
+        protected override ValidationResult IsValid(
+            object value, ValidationContext validationContext)
+        {
+            var file = value as IFormFile;
+            if (file != null)
+            {
+                if (file.Length > _maxFileSize)
+                {
+                    return new ValidationResult(GetErrorMessage());
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+
+        public string GetErrorMessage()
+        {
+            return $"Maximum allowed file size is { _maxFileSize} bytes.";
+        }
+    }
+    
+    public class AllowedExtensionsAttribute : ValidationAttribute
+    {
+        private readonly string[] _extensions;
+        public AllowedExtensionsAttribute(string[] extensions)
+        {
+            _extensions = extensions;
+        }
+    
+        protected override ValidationResult IsValid(
+            object value, ValidationContext validationContext)
+        {
+            var file = value as IFormFile;
+            if (file != null)
+            {
+                var extension = Path.GetExtension(file.FileName);
+                if (!_extensions.Contains(extension.ToLower()))
+                {
+                    return new ValidationResult(GetErrorMessage());
+                }
+            }
+        
+            return ValidationResult.Success;
+        }
+
+        public string GetErrorMessage()
+        {
+            return $"This photo extension is not allowed!";
         }
     }
 }
