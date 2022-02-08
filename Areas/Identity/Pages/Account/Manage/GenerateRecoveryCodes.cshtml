@@ -6,7 +6,7 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h4>@ViewData["Title"]</h4>
+<h4 class="text-center">@ViewData["Title"]</h4>
 <div class="alert alert-warning" role="alert">
     <p>
         <span class="glyphicon glyphicon-warning-sign"></span>
@@ -21,7 +21,7 @@
     </p>
 </div>
 <div>
-    <form method="post" class="form-group">
-        <button class="btn btn-danger" type="submit">Generate Recovery Codes</button>
+    <form method="post" class="mb-3">
+        <button class="btn btn-danger form-control" type="submit">Generate Recovery Codes</button>
     </form>
 </div>

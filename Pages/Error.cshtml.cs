@@ -26,19 +26,13 @@ namespace ApplicationSecurity.Pages
 
         private void SetErrorMessage()
         {
-            switch (StatusCode)
+            ErrorMessage = StatusCode switch
             {
-                case 403:
-                    ErrorMessage = "You are not authorized to access this page.";
-                    break;
-                case 500:
-                    ErrorMessage = "Something went wrong when processing your request.";
-                    break;
-                default:
-                    StatusCode = 404;
-                    ErrorMessage = "We could not find what you were looking for.";
-                    break;
-            }
+                400 => "Your browser sent a request we could not understand.",
+                403 => "You are not authorized to access this page.",
+                500 => "Something went wrong when processing your request.",
+                _ => "We could not find what you were looking for."
+            };
         }
 
         public void OnGet()
