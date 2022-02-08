@@ -72,6 +72,7 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
             
             [Required]
             [DataType(DataType.Date)]
+            [ValidateYears(ErrorMessage = "Date of Birth cannot exceed today's date")]
             [Display(Name = "Date of Birth")]
             public DateTime DateOfBirth { get; set; }
             
@@ -229,6 +230,23 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account
         public string GetErrorMessage()
         {
             return $"This photo extension is not allowed!";
+        }
+    }
+    
+    public class ValidateYearsAttribute : ValidationAttribute
+    {
+        private readonly DateTime _minValue = DateTime.UtcNow.AddYears(-60);
+        private readonly DateTime _maxValue = DateTime.UtcNow;
+
+        public override bool IsValid(object value)
+        {
+            DateTime val = (DateTime)value;
+            return val >= _minValue && val <= _maxValue;
+        }
+
+        public override string FormatErrorMessage(string name)
+        {
+            return string.Format(ErrorMessage ?? "Date must be between {0} and {1}", _minValue, _maxValue);
         }
     }
 }
