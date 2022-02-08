@@ -6,36 +6,33 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
 <div class="row">
+    <div class="col-md-4"></div>
     <div class="col-md-4">
+        <h1 class="text-center">@ViewData["Title"]</h1>
         <section>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
+                <hr/>
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
+                    <input asp-for="Input.Email" class="form-control"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                    <input asp-for="Input.Password" class="form-control"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                <div class="mb-3">
+                    <button type="submit" class="form-control btn btn-primary">Log in</button>
                 </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                <div class="mb-3">
+                    <p class="text-center">
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">Register as a new user</a>
                     </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                </div>  
-                <recaptcha action="login" />
+                </div>
+                <recaptcha action="login"/>
             </form>
         </section>
     </div>
