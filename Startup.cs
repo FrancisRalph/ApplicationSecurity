@@ -76,8 +76,10 @@ namespace ApplicationSecurity
                 options.ValidationInterval = TimeSpan.FromSeconds(10);
             });
             
-            services.AddRazorPages()
-                .AddRazorRuntimeCompilation();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+            }).AddRazorRuntimeCompilation();
             
             services.AddReCaptcha(Configuration.GetSection("ReCaptcha"));
 
