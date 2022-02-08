@@ -1,4 +1,4 @@
-﻿const passwordInput = $("[name='Input.Password']");
+﻿const passwordInput = $("#passwordInput");
 const strengthText = $("#passwordStrength");
 
 // matches backend validation
