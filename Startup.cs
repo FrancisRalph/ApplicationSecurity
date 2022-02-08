@@ -61,7 +61,7 @@ namespace ApplicationSecurity
                 options.Cookie.Name = "SITConnect";
                 options.Cookie.HttpOnly = true;
                 
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(20); // 20 min then time out
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5); // 20 min then time out
                 // redirects to this page after session time out:
                 options.LoginPath = "/Identity/Account/Login";
                 options.SlidingExpiration = true; // time out only when idling
