@@ -37,7 +37,7 @@ namespace ApplicationSecurity.Services
                 return IdentityResult.Failed( new IdentityError
                 {
                     Code = "PasswordHasNotExceededMinimumAge",
-                    Description = $"Please wait {MinimumAgeInSeconds} minute(s) before you change your password again"
+                    Description = $"Please wait {MinimumAgeInSeconds} second(s) before you change your password again"
                 });
             }
 
