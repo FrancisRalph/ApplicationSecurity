@@ -9,7 +9,7 @@ namespace ApplicationSecurity.Services
     public class PasswordWithHistoryValidator : PasswordValidator<ApplicationUser>
     {
         private const int HistoryCount = 2;
-        private const int MinimumAgeInMinutes = 1;
+        private const int MinimumAgeInSeconds = 10;
         private readonly PasswordLogService _passwordLogService;
 
         public PasswordWithHistoryValidator(PasswordLogService passwordLogService, IdentityErrorDescriber errors = null)
@@ -29,7 +29,7 @@ namespace ApplicationSecurity.Services
 
             var hasUserPasswordExceededMinimumAge = PasswordLogService.HasUserPasswordExceededMinimumAge(
                 user,
-                TimeSpan.FromMinutes(MinimumAgeInMinutes)
+                TimeSpan.FromSeconds(MinimumAgeInSeconds)
             );
 
             if (!hasUserPasswordExceededMinimumAge)
@@ -37,7 +37,7 @@ namespace ApplicationSecurity.Services
                 return IdentityResult.Failed( new IdentityError
                 {
                     Code = "PasswordHasNotExceededMinimumAge",
-                    Description = $"Please wait {MinimumAgeInMinutes} minute(s) before you change your password again"
+                    Description = $"Please wait {MinimumAgeInSeconds} minute(s) before you change your password again"
                 });
             }
 
