@@ -9,7 +9,7 @@ namespace ApplicationSecurity.Services
     public class PasswordWithHistoryValidator : PasswordValidator<ApplicationUser>
     {
         private const int HistoryCount = 2;
-        private const int MinimumAgeInSeconds = 30;
+        private const int MinimumAgeInSeconds = 20;
         private readonly PasswordLogService _passwordLogService;
 
         public PasswordWithHistoryValidator(PasswordLogService passwordLogService, IdentityErrorDescriber errors = null)
