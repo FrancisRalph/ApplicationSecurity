@@ -14,7 +14,7 @@ namespace ApplicationSecurity.Middleware
 
     public class PasswordExpiryMiddleware
     {
-        private const int MaximumAgeInMinutes = 2;
+        private const int MaximumAgeInMinutes = 3;
         private readonly RequestDelegate _next;
 
         public PasswordExpiryMiddleware(RequestDelegate next)

@@ -5,12 +5,12 @@ namespace ApplicationSecurity.Data
 {
     public enum LogAction
     { // starts at index 0
-        SuccessfulLogin,
-        WrongPassword,
-        Wrong2Fa,
-        RedirectedToLockedOut,
-        RedirectedTo2Fa,
-        Logout
+        SuccessfulLogin, // 0
+        WrongPassword, // 1
+        Wrong2Fa, // 2
+        RedirectedToLockedOut, // 3
+        RedirectedTo2Fa, // 4
+        Logout // 5
     }
     
     public class AuditLog
