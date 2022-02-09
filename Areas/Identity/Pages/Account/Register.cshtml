@@ -44,15 +44,21 @@
             <div class="mb-3">
                 <label asp-for="Input.Password"></label>
                 <span id="passwordStrength"></span>
-                <input asp-for="Input.Password" id="passwordInput" class="form-control"/>
+                <div class="input-group">
+                    <input asp-for="Input.Password" id="passwordInput" class="form-control"/>
+                    <button class="btn btn-outline-secondary" type="button" data-password-toggle="passwordInput"></button>
+                </div>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control"/>
+                <div class="input-group">
+                    <input asp-for="Input.ConfirmPassword" id="confirmPasswordInput" class="form-control"/>
+                    <button class="btn btn-outline-secondary" type="button" data-password-toggle="confirmPasswordInput"></button>
+                </div>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <recaptcha action="register" />
+            <recaptcha action="register"/>
             <button type="submit" class="btn btn-primary form-control">Register</button>
         </form>
     </div>
@@ -60,5 +66,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
-    <script src="/js/passwordStrengthChecker.js"></script>
+    <script src="~/js/passwordStrengthChecker.js"></script>
+    <script src="~/js/passwordVisibilityToggle.js"></script>
 }
