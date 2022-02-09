@@ -30,6 +30,15 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
 
         public string Username { get; set; }
         
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        
+        [Display(Name = "DateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
+        
         [Display(Name = "Credit Card Number")]
         public string TruncatedCreditCardNumber { get; set; }
         public string Photo { get; set; }
@@ -46,6 +55,9 @@ namespace ApplicationSecurity.Areas.Identity.Pages.Account.Manage
             var truncatedCreditCardNumber = decryptedCreditCardNumber[^4..]; // last 4 characters
 
             Username = userName;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            DateOfBirth = user.DateOfBirth;
             TruncatedCreditCardNumber = string.Concat(Enumerable.Repeat("*", 12)) + truncatedCreditCardNumber;
             Photo = user.Photo;
         }
